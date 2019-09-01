@@ -1,0 +1,87 @@
+1. What should be the output of the following Script? 
+v <- c( 2,5.5,6) 
+t <- c(8, 3, 4) 
+print(v%/%t) 
+
+Answer:
+0 1 1
+
+2. You have 25 excel files with names as xx_1.xlsx, xx_2.xlsx,……..xx_25.xlsx in a dir. 
+Write a program to extract the contents of each excel sheet and make it one df. 
+
+Answer:
+#Method 1
+
+#library(xlsx)
+setwd("D:/R/Excel") 
+df_total=data.frame()
+df_total=NA
+data=data.frame()
+data=NA
+files <- list.files(pattern = '*.xlsx')
+length(files)
+
+if (length(files) != 0) {
+
+  for(i in 1:length(files)) 
+  { 
+    filename=files[i] 
+    #data=read.xlsx(filename,1)
+    data=read.csv(filename,header = TRUE,sep = ",")
+    df_total=cbind(df_total,data)
+  } 
+
+}else {
+  print("Please copy files in specified folder")
+  stop()
+}
+df_total
+
+#Method 2
+
+library(xlsx)
+library(dplyr)
+library(readxl)
+
+  setwd("D:/R/Excel") 
+  files <- list.files(pattern = '*.xlsx')
+  df <- lapply(files, read_xlsx) %>% bind_rows()
+
+print(df)
+
+3. If the above 25 files were csv files, what would be your script to read?
+Answer:
+#Method 1
+#library(xlsx)
+setwd("D:/R/Excel") 
+df_total=data.frame()
+df_total=NA
+data=data.frame()
+data=NA
+files <- list.files(pattern = '*.csv')
+length(files)
+
+if (length(files) != 0) {
+
+  for(i in 1:length(files)) 
+  { 
+    filename=files[i] 
+    #data=read.xlsx(filename,1)
+    data=read.csv(filename,header = TRUE,sep = ",")
+    df_total=cbind(df_total,data)
+  } 
+
+}else {
+  print("Please copy files in specified folder")
+  stop()
+}
+df_total
+
+#Method 2
+#library(xlsx)
+library(dplyr)
+
+setwd("D:/R/Excel") 
+  files <- list.files(pattern = '*.csv')
+  df <- lapply(files, read.csv) %>% bind_rows()
+print(df)
